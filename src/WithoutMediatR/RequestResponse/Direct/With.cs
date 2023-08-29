@@ -1,8 +1,8 @@
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
-using MediatR;
 
-namespace WithoutMediatR.RequestResponse;
+namespace WithoutMediatR.RequestResponse.Direct;
 
 file class Ping : IRequest<string>
 {

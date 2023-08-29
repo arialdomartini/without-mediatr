@@ -2,15 +2,13 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace WithoutMediatR.RequestResponseMultiple;
+namespace WithoutMediatR.RequestResponseMultiple.Direct;
 
 file class Ping : IRequest<string>
 {
 }
 
-file record Echo(string Message) : IRequest<string>
-{
-}
+file record Echo(string Message) : IRequest<string>;
 
 file class PingHandler :
     IRequestHandler<Ping, string>,

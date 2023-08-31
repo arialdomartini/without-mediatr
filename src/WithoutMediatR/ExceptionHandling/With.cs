@@ -81,7 +81,7 @@ public class With
     }
     
     [Fact]
-    async Task ping_request_response_directly_invoking_mediatr()
+    async Task exceptions_are_handled()
     {
         var mediator = _container.GetInstance<IMediator>();
 

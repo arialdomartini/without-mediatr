@@ -10,7 +10,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Lamar"/>
+        <PackageReference Include="Lamar" Version="12.0.0"/>
         <PackageReference Include="MediatR" Version="12.1.1"/>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0"/>
         <PackageReference Include="System.Reflection.TypeExtensions" Version="4.7.0"/>
@@ -25,12 +25,5 @@
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
     </ItemGroup>
-
-
-    <ItemGroup>
-        <PackageVersion Update="MediatR" Version="12.1.1"/>
-        <PackageVersion Update="Lamar" Version="12.0.0"/>
-    </ItemGroup>
-
 
 </Project>

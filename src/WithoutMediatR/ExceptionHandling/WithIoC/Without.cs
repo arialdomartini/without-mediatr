@@ -1,7 +1,7 @@
 using Lamar;
 using Xunit;
 
-namespace WithoutMediatR.ExceptionHandling.Without;
+namespace WithoutMediatR.ExceptionHandling.WithIoC.Without;
 
 public class Ping
 {
@@ -86,7 +86,7 @@ public class Without
 
         await handler.Handle(new PingProtectedResource());
 
-        Assert.Equal("---- Exception Handler: 'WithoutMediatR.ExceptionHandling.Without.AccessDeniedExceptionHandler'\r\n", _stringWriter.ToString());
+        Assert.Equal("---- Exception Handler: 'WithoutMediatR.ExceptionHandling.WithIoC.Without.AccessDeniedExceptionHandler'\r\n", _stringWriter.ToString());
     }
 
     [Fact]

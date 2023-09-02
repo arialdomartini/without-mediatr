@@ -4,9 +4,7 @@ using Xunit;
 
 namespace WithoutMediatR.RequestResponse.Direct;
 
-file class Ping : IRequest<string>
-{
-}
+file class Ping : IRequest<string> { }
 
 file class PingHandler : IRequestHandler<Ping, string>
 {

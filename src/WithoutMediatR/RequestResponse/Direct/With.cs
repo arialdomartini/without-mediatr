@@ -21,9 +21,9 @@ public class With
     public With()
     {
         var serviceProvider =
-                new ServiceCollection()
-                    .AddTransient<IRequestHandler<Ping, string>, PingHandler>()
-                    .BuildServiceProvider();
+            new ServiceCollection()
+                .AddTransient<IRequestHandler<Ping, string>, PingHandler>()
+                .BuildServiceProvider();
 
         _mediator = new Mediator(serviceProvider);
     }

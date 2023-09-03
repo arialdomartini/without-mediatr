@@ -4,9 +4,7 @@ using Xunit;
 
 namespace WithoutMediatR.RequestResponseMultiple.Direct;
 
-file class Ping : IRequest<string>
-{
-}
+file class Ping : IRequest<string> { }
 
 file record Echo(string Message) : IRequest<string>;
 

@@ -2,16 +2,16 @@ using Lamar;
 using MediatR;
 using Xunit;
 
-namespace WithoutMediatR.RequestResponseChain;
+namespace WithoutMediatR.RequestResponseMultipleRegistration.WithIoC;
 
 public record Echo(string Message) : IRequest<string>;
 
-public class WillBeIgnored : IRequestHandler<Echo, string>
+public class HandlerA : IRequestHandler<Echo, string>
 {
     public Task<string> Handle(Echo request, CancellationToken cancellationToken) => Task.FromResult(request.Message);
 }
 
-public class PingHandler : IRequestHandler<Echo, string>
+public class HandlerB : IRequestHandler<Echo, string>
 {
     public Task<string> Handle(Echo request, CancellationToken cancellationToken) => Task.FromResult("doh!");
 }

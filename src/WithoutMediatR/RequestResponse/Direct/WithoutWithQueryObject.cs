@@ -4,12 +4,10 @@ namespace WithoutMediatR.RequestResponse.Direct;
 
 file class Ping{}
 
-
 file interface IPingHandler
 {
     string Ping(Ping ping);
 }                           
-
 
 file class PingHandler : IPingHandler
 {

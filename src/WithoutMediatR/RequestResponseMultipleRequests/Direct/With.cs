@@ -2,7 +2,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace WithoutMediatR.RequestResponseMultiple.Direct;
+namespace WithoutMediatR.RequestResponseMultipleRequests.Direct;
 
 file class Ping : IRequest<string> { }
 

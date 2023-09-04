@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace WithoutMediatR.RequestResponseMultiple.Direct;
+namespace WithoutMediatR.RequestResponseMultipleRequests.Direct;
 
 file interface IPingHandler
 {

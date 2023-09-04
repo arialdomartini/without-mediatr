@@ -2,7 +2,7 @@ using Lamar;
 using MediatR;
 using Xunit;
 
-namespace WithoutMediatR.RequestResponseMultiple.WithIoC;
+namespace WithoutMediatR.RequestResponseMultipleRequests.WithIoC;
 
 public class Ping : IRequest<string>
 {

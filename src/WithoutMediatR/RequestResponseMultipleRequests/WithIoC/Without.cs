@@ -1,7 +1,7 @@
 ﻿using Lamar;
 using Xunit;
 
-namespace WithoutMediatR.RequestResponseMultiple.WithIoC;
+namespace WithoutMediatR.RequestResponseMultipleRequests.WithIoC;
 
 public interface IPingHandler
 {

@@ -2,16 +2,16 @@
 
 namespace WithoutMediatR.RequestResponseMultipleRequests.Direct;
 
-file interface IPingHandler
+file interface IMyHandler
 {
     string Ping();
     string Echo(string message);
 }
 
-file class PingHandler : IPingHandler
+file class MyHandler : IMyHandler
 {
-    string IPingHandler.Ping() => "Pong";
-    string IPingHandler.Echo(string message) => message;
+    string IMyHandler.Ping() => "Pong";
+    string IMyHandler.Echo(string message) => message;
 }
 
 public class Without
@@ -19,8 +19,8 @@ public class Without
     [Fact]
     void ping_request_response()
     {
-        IPingHandler pingHandler = new PingHandler();
-        var response = pingHandler.Ping();
+        IMyHandler myHandler = new MyHandler();
+        var response = myHandler.Ping();
         
         Assert.Equal("Pong", response);
     }
@@ -28,8 +28,8 @@ public class Without
     [Fact]
     void echo_request_response()
     {
-        IPingHandler pingHandler = new PingHandler();
-        var response = pingHandler.Echo("some message");
+        IMyHandler myHandler = new MyHandler();
+        var response = myHandler.Echo("some message");
         
         Assert.Equal("some message", response);
     }

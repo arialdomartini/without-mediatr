@@ -7,10 +7,9 @@ namespace WithoutMediatR.RequestResponseMultipleRequests.Direct;
 file record Ping : IRequest<string> { }
 file record Echo(string Message) : IRequest<string>;
 
-file class PingHandler :
+file class MyHandler :
     IRequestHandler<Ping, string>,
     IRequestHandler<Echo, string>
-
 {
     public Task<string> Handle(Ping request, CancellationToken cancellationToken)
     {
@@ -31,8 +30,8 @@ public class With
     {
         var serviceProvider =
             new ServiceCollection()
-                .AddTransient<IRequestHandler<Ping, string>, PingHandler>()
-                .AddTransient<IRequestHandler<Echo, string>, PingHandler>()
+                .AddTransient<IRequestHandler<Ping, string>, MyHandler>()
+                .AddTransient<IRequestHandler<Echo, string>, MyHandler>()
                 .BuildServiceProvider();
 
         _mediator = new Mediator(serviceProvider);

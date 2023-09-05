@@ -22,7 +22,7 @@ file class Pong1 : IPingNotificationHandler
 }
 
 file class Pong2 : IPingNotificationHandler
-{it s
+{
     internal static string WasInvoked;
 
     Task IPingNotificationHandler.NotifyPing()
@@ -33,11 +33,11 @@ file class Pong2 : IPingNotificationHandler
     }
 }
 
-file class PingNotificationPublisher : IPingNotificationHandler
+file class PingNotificationComposite : IPingNotificationHandler
 {
     private readonly IEnumerable<IPingNotificationHandler> _handlers;
 
-    public PingNotificationPublisher(IEnumerable<IPingNotificationHandler> handlers)
+    public PingNotificationComposite(IEnumerable<IPingNotificationHandler> handlers)
     {
         _handlers = handlers;
     }
@@ -76,7 +76,7 @@ public class Without
             new Pong2()
         };
         
-        var client = new Client(new PingNotificationPublisher(handlers));
+        var client = new Client(new PingNotificationComposite(handlers));
 
         client.DoWork();
         

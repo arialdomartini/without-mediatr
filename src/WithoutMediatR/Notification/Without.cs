@@ -1,4 +1,5 @@
 ﻿using Lamar;
+using WithoutMediatR.RequestResponse.WithIoC;
 using Xunit;
 
 namespace WithoutMediatR.Notification.Without;
@@ -21,7 +22,7 @@ file class Pong1 : IPingNotificationHandler
 }
 
 file class Pong2 : IPingNotificationHandler
-{
+{it s
     internal static string WasInvoked;
 
     Task IPingNotificationHandler.NotifyPing()
@@ -32,8 +33,7 @@ file class Pong2 : IPingNotificationHandler
     }
 }
 
-// ReSharper disable once ClassNeverInstantiated.Local
-file class PingNotificationPublisher : IPingNotificationPublisher
+file class PingNotificationPublisher : IPingNotificationHandler
 {
     private readonly IEnumerable<IPingNotificationHandler> _handlers;
 
@@ -42,7 +42,7 @@ file class PingNotificationPublisher : IPingNotificationPublisher
         _handlers = handlers;
     }
 
-    Task IPingNotificationPublisher.Ping()
+    Task IPingNotificationHandler.NotifyPing()
     {
         _handlers.ToList().ForEach(h => h.NotifyPing());
 
@@ -50,37 +50,35 @@ file class PingNotificationPublisher : IPingNotificationPublisher
     }
 }
 
-internal interface IPingNotificationPublisher
+file class Client
 {
-    Task Ping();
+    private readonly IPingNotificationHandler _handler;
+
+    internal Client(IPingNotificationHandler handler)
+    {
+        _handler = handler;
+    }
+
+    internal void DoWork()
+    {
+        _handler.NotifyPing();
+    }
 }
 
-public class Without : IDisposable
+public class Without
 {
-    private readonly Container _container;
-
-    public Without()
-    {
-        _container = new Container(cfg =>
-        {
-            cfg.For<IPingNotificationHandler>().Add(new Pong1());
-            cfg.For<IPingNotificationHandler>().Add(new Pong2());
-            
-            cfg.For<IPingNotificationPublisher>().Use<PingNotificationPublisher>();
-        });
-    }
-
-    void IDisposable.Dispose()
-    {
-        _container.Dispose();
-    }
-
     [Fact]
-    async void notification_test()
+    void notification_test()
     {
-        var handler = _container.GetInstance<IPingNotificationPublisher>();
+        IPingNotificationHandler[] handlers =
+        {
+            new Pong1(), 
+            new Pong2()
+        };
+        
+        var client = new Client(new PingNotificationPublisher(handlers));
 
-        await handler.Ping();
+        client.DoWork();
         
         Assert.Equal("Pong 1", Pong1.WasInvoked);
         Assert.Equal("Pong 2", Pong2.WasInvoked);

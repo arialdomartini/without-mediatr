@@ -13,10 +13,8 @@ internal interface IPingHandler
 
 file class PingHandler : IPingHandler
 {
-    public Task<string> Handle(Ping request)
-    {
-        return Task.FromResult("Pong");
-    }
+    Task<string> IPingHandler.Handle(Ping request) => 
+        Task.FromResult("Pong");
 }
 
 internal class Client

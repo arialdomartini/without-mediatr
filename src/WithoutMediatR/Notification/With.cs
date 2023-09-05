@@ -4,7 +4,7 @@ using Xunit;
 
 namespace WithoutMediatR.Notification;
 
-public class PingNotification : INotification { }
+public record PingNotification : INotification;
 
 // ReSharper disable once ClassNeverInstantiated.Global
 public class Pong1 : INotificationHandler<PingNotification>

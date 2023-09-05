@@ -1,23 +1,26 @@
-﻿using Xunit;
+﻿using Lamar;
+using Xunit;
 
 namespace WithoutMediatR.RequestResponseSubtyping;
 
-file record SubTypeOfPing : Ping;
+file class SubtypeOfPing : Ping{};
 
-internal record Ping;
-
-internal interface IPingHandler
+file class Ping
 {
-    Task<string> Handle(Ping request);
+    public string Message { get; set; }
+};
+
+file interface IPingHandler
+{
+    string Ping(Ping request);
 }
 
 file class PingHandler : IPingHandler
 {
-    Task<string> IPingHandler.Handle(Ping request) => 
-        Task.FromResult("Pong");
+    string IPingHandler.Ping(Ping request) => $"Handler received {request.Message}";
 }
 
-internal class Client
+file class Client
 {
     private readonly IPingHandler _pingHandler;
 
@@ -26,33 +29,33 @@ internal class Client
         _pingHandler = pingHandler;
     }
 
-    internal Task<string> UsePingHandler(Ping request) => 
-        _pingHandler.Handle(request);
+    internal string SomeMethod(Ping request) => 
+        _pingHandler.Ping(request);
 }
+
 
 public class Without
 {
-    private readonly Client _client;
+    private readonly Container _container;
 
     public Without()
     {
-        IPingHandler pingHandler = new PingHandler();
-        _client = new Client(pingHandler);
+        _container = new Container(cfg =>
+        {
+            cfg.For<IPingHandler>().Add(new PingHandler());
+            cfg.For<Client>().Use<Client>();
+        });
     }
     
     [Fact]
-    async Task Ping_is_delivered()
+    void subtype_of_ping_request_is_delivered()
     {
-        var response = await _client.UsePingHandler(new Ping());
+        var controller = _container.GetInstance<Client>();
 
-        Assert.Equal("Pong", response);
-    }
-
-    [Fact]
-    async Task SubTypeOfPing_is_also_delivered()
-    {
-        var response = await _client.UsePingHandler(new SubTypeOfPing());
-
-        Assert.Equal("Pong", response);
+        var instanceOfSubtype = new SubtypeOfPing{Message = "some message"};
+        
+        var response = controller.SomeMethod(instanceOfSubtype);
+        
+        Assert.Equal("Handler received some message", response);
     }
 }
